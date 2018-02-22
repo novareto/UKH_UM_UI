@@ -36,9 +36,9 @@ export default {
     }
   },
   methods: {
-    listUsers() {      
+    listUsers() {   
       axios.get(
-        'http://localhost:8080/users/list/' + this.filters.department
+        'http://localhost:8080/users/list' + (this.filters.department ? ('/' + this.filters.department) : '')
       ).then((response) => {
 	    this.error = '';
 	    var results = response.data;
