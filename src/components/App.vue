@@ -9,6 +9,9 @@
           <li v-if="!user.authenticated">
 	    <router-link to="/list">List</router-link>
 	  </li>
+          <li v-if="user.authenticated">
+	    <router-link to="/Add">Add User</router-link>
+	  </li>
           <li v-if="!user.authenticated">
 	    <router-link to="/login">Login</router-link>
 	  </li>
@@ -31,7 +34,8 @@
 </template>
 
 <script>
-  import auth from '../auth' 
+  import auth from '../auth'
+
   export default {
     data() {
       return {
