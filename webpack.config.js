@@ -4,6 +4,10 @@ module.exports = {
     './src/index.js',
     './src/auth/index.js'
   ],
+  devServer: {
+      inline:true,
+      port: 8000
+  },
   // output configuration
   output: {
     path: __dirname + '/build/',

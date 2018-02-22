@@ -26,11 +26,11 @@ const routes = [
 ]
 
 export const router = new VueRouter({
-  routes
+    routes
 })
 
 const app = new Vue({
-  el: '#app',
-  router: router,
-  render: h => h(App)
+    el: '#app',
+    router: router,
+    render: h => h(App)
 })

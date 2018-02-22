@@ -29,26 +29,17 @@ export default {
   data() {
     return {
         filters: {
-          department: null
+          department: ''
         },
 	users: [],
 	error: ''
     }
   },
   methods: {
-    listUsers() {
-      var filters = {
-         departments: [this.filters.department]
-      }
-      var querystring = require('querystring');
-      
+    listUsers() {      
       axios.get(
-        'http://localhost:7001/users/list', {
-	  params: filters,
-          paramsSerializer: function(params) {
-            return querystring.stringify(params, { indices: false })
-         }
-	}).then((response) => {
+        'http://localhost:8080/users/list/' + this.filters.department
+      ).then((response) => {
 	    this.error = '';
 	    var results = response.data;
 	    if (results.length < 1) {
