@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     getQuote() {
-      axios.get('http://localhost:7001/users/personal', {
+      axios.get('http://localhost:8080/users/personal', {
         headers: auth.getAuthHeader()
       })
         .then((response) => {
