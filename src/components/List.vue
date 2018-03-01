@@ -25,6 +25,8 @@
 
 <script>
 import axios from 'axios'
+import { API_URL } from '../config'
+
 export default {
   data() {
     return {
@@ -38,7 +40,7 @@ export default {
   methods: {
     listUsers() {   
       axios.get(
-        'http://localhost:8080/users/list' + (this.filters.department ? ('/' + this.filters.department) : '')
+        API_URL + '/users/list' + (this.filters.department ? ('/' + this.filters.department) : '')
       ).then((response) => {
 	    this.error = '';
 	    var results = response.data;

@@ -10,7 +10,9 @@
 
 <script>
 import auth from '../auth'
+import { API_URL } from '../config'
 import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -19,7 +21,7 @@ export default {
   },
   methods: {
     getQuote() {
-      axios.get('http://localhost:8080/users/personal', {
+      axios.get(API_URL + '/users/personal', {
         headers: auth.getAuthHeader()
       })
         .then((response) => {

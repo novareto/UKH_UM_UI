@@ -1,21 +1,20 @@
 <template>
-  <el-card class="form" v-if="schema">
-    <form-schema ref="formSchema" :schema="schema"
-                 v-model="model" @submit="submit">
-      <button type="submit">Add</button>
-    </form-schema>
-  </el-card>
+  <div class="panel-body">
+    <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { API_URL } from '../config'
+
 
 export default {
 
     mounted: function() {
 	var self = this;
 	axios.get(
-	      'http://localhost:8080/users/schema'
+	      API_URL + '/users/schema'
 	  ).then(
 	      response => { self.schema = response.data }
 	  )
@@ -23,7 +22,11 @@ export default {
 
     data: () => ({
 	schema: null,
-	model: {}
+	model: {},
+	formOptions: {
+	    validateAfterLoad: true,	
+	    validateAfterChanged: true
+	}
     }),
 
     methods: {

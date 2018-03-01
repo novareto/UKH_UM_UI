@@ -1,9 +1,9 @@
 import { router } from '../index';
+import { API_URL } from '../config';
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8080/'
-const LOGIN_URL = API_URL + 'auth/login'
-const SIGNUP_URL = API_URL + 'auth/signup'
+const LOGIN_URL = API_URL + '/auth/login'
+const SIGNUP_URL = API_URL + '/auth/signup'
 
 
 export default {

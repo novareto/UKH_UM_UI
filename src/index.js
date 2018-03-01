@@ -10,61 +10,18 @@ import VueRouter from 'vue-router';
 import auth from './auth'
 
 import axios from 'axios';
-import FormSchema from 'vue-json-schema'
-import ElementUI from 'element-ui'
-import {
-  Form,
-  FormItem,
-  Input,
-  Radio,
-  Checkbox,
-  Select,
-  Option,
-  Button
-} from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
+import VueFormGenerator from "vue-form-generator";
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-FormSchema.setComponent('label', FormItem)
-FormSchema.setComponent('email', Input)
-FormSchema.setComponent('text', Input)
-FormSchema.setComponent('textarea', Input)
-FormSchema.setComponent('password', Input)
-FormSchema.setComponent('checkbox', Checkbox)
-FormSchema.setComponent('radio', Radio)
-FormSchema.setComponent('select', Select)
-FormSchema.setComponent('option', Option)
-
-// Use the third argument to define props of the component
-FormSchema.setComponent('button', Button, {
-  type: 'primary',
-  label: 'Subscribe'
-})
-
-// The third argument can also be a function that return an object
-FormSchema.setComponent('form', Form, ({ vm }) => {
-  // vm is the FormSchema VM
-
-  const labelWidth = '120px'
-  const model = vm.data
-  const rules = {}
-
-  vm.fields.forEach((field) => {
-    rules[field.name] = {
-      required: field.required,
-      message: field.title
-    }
-  })
-
-  // returning the form props
-  return { labelWidth, rules, model }
-})
 
 // Check the users auth status when the app starts
 auth.checkAuth()
 
-Vue.use(VueRouter)
-Vue.use(ElementUI, { locale })
-Vue.component('form-schema', FormSchema)
+Vue.use(VueRouter);
+Vue.use(BootstrapVue);
+Vue.use(VueFormGenerator);
 
 const routes = [
     { path: '/search', component: Search },
