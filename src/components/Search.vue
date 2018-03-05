@@ -54,7 +54,11 @@
       <template slot="name" slot-scope="row">
 	{{row.item.nname}} {{row.item.vname}}
       </template>
-      <template slot="actions" slot-scope="row">
+    <template slot="actions" slot-scope="row">
+        <b-button size="sm" @click="edit_user(row.item)" class="mr-1">
+          Edit
+        </b-button>
+
         <b-button size="sm" @click="delete_user(row.item, row.index, $event.target)" class="mr-1">
           Delete
         </b-button>
@@ -64,16 +68,24 @@
 </template>
 
 <script>
-let items = [
-    {nname: "Klinger", oid: "930004492", vname: "Christian"},
-    {nname: "Klinger", oid: "930003241", vname: "Christain"},
-    {nname: "Klinger", oid: "930004045", vname: "Christian"}
-]
+import axios from 'axios'
+import { API_URL } from '../config'
 
 export default {
+    mounted: function() {
+	var self = this;
+	axios.get(
+	      API_URL + '/users/list'
+	  ).then(
+	      response => {
+	          self.items = response.data;
+		  self.totalRows = response.data.length;
+	      }
+	  )
+    },
     data () {
 	return {
-	    items: items,
+	    items: [],
 	    message: "",
 	    fields: [
 		{ key: 'name', label: 'Full name', sortable: true },
@@ -82,13 +94,12 @@ export default {
 		{ key: 'actions', label: 'Actions', sortable: false}
 	    ],
 	    currentPage: 1,
-	    perPage: 2,
-	    totalRows: items.length,
-	    pageOptions: [ 5, 10, 15 ],
+	    perPage: 100,
+	    totalRows: 0,
+	    pageOptions: [ 25, 50, 100, 150 ],
 	    sortBy: null,
 	    sortDesc: false,
 	    filter: null,
-	    modalInfo: { title: '', content: '' }
 	}
     },
     computed: {
@@ -100,11 +111,21 @@ export default {
 	}
     },
     methods: {
+	edit_user(item) {
+	    this.$router.push("/edit/" + item.oid)
+	},
 	delete_user(item, index, button) {
-	    // CHANGE THAT BY AN AXIOS CALL
-	    console.log('Deleting ', item)
-	    this.items = this.items.filter(user => user.oid != item.oid);
-	    this.message = "User " + item.oid + " deleted.";
+
+	    console.log('Deleting ', item)	    
+	    axios.delete(
+		API_URL + '/users/delete/' + item.oid
+	    ).then(
+		response => {
+		    this.items = this.items.filter(
+			user => user.oid != item.oid);
+		    this.message = "User " + item.oid + " deleted.";
+		}
+	    )
 	},
 	onFiltered(filteredItems) {
 	    this.totalRows = filteredItems.length

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './components/App.vue';
 import Search from './components/Search.vue';
 import Add from './components/Add.vue';
+import Edit from './components/Edit.vue';
 import List from './components/List.vue';
 import Personal from './components/Personal.vue';
 import Signup from './components/Signup.vue';
@@ -28,6 +29,7 @@ const routes = [
     { path: '/add', component: Add },
     { path: '/list', component: List },
     { path: '/personal', component: Personal },
+    { path: '/edit/:id', component: Edit },
     { path: '/signup', component: Signup },
     { path: '/login', component: Login },
     { path: '*', redirect: '/search' }

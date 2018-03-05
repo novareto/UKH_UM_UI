@@ -1,7 +1,7 @@
 <template>
   <div class="panel-body">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-    <b-button variant="primary" @click="submit()">Create</b-button>
+    <b-button variant="primary" @click="submit()">Update</b-button>
   </div>
 </template>
 
@@ -14,15 +14,23 @@ export default {
 
     mounted: function() {
 	var self = this;
+	self.oid = self.$route.params.id;
 	axios.get(
 	      API_URL + '/users/schema'
 	  ).then(
 	      response => { self.schema = response.data }
-	  )
+	  );
+	axios.get(
+	      API_URL + '/users/get/' + self.oid
+	  ).then(
+	      response => { self.model = response.data.model }
+	  );
     },
 
     data: () => ({
 	schema: null,
+	oid: null,
+	model: {},
 	model: {},
 	formOptions: {
 	    validateAfterLoad: true,	
@@ -32,8 +40,8 @@ export default {
 
     methods: {
 	submit (e) {
-	    axios.post( 
-		API_URL + '/users/create', this.model, {
+	    axios.put( 
+		API_URL + '/users/update/' + this.oid, this.model, {
 		    headers: {
 			'Content-Type': 'application/json'
 		    }
